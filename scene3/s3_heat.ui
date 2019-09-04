@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>s3_heat</class>
+ <widget class="QDialog" name="s3_heat">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>461</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>一般缺陷</string>
+   </property>
+   <widget class="QTreeView" name="treeView">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>421</width>
+      <height>131</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>208</x>
+      <y>170</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加规则</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/add.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/add.jpg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>170</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>删除规则</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</iconset>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>220</y>
+     <width>461</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>严重缺陷</string>
+   </property>
+   <widget class="QTreeView" name="treeView_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>421</width>
+      <height>131</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>208</x>
+      <y>170</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加规则</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/add.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/add.jpg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>170</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>删除规则</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</iconset>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>430</y>
+     <width>461</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>危机缺陷</string>
+   </property>
+   <widget class="QTreeView" name="treeView_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>421</width>
+      <height>131</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>208</x>
+      <y>170</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加规则</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/add.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/add.jpg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>170</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>删除规则</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</iconset>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

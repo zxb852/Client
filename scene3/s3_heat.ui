@@ -137,7 +137,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>危机缺陷</string>
+    <string>危急缺陷</string>
    </property>
    <widget class="QTreeView" name="treeView_3">
     <property name="geometry">

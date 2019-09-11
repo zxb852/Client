@@ -11,6 +11,7 @@
 #include "scene2.h"
 #include "scene3.h"
 #include "scene4.h"
+#include "client_sdk.h"
 
 
 namespace Ui {
@@ -26,6 +27,13 @@ public:
     ~MainWindow();
 
 private slots:
+    void setsocket(std::shared_ptr<client> ptr_client);
+
+    void Download_Vedio(record_time begin,record_time end,int port);
+    void Capture();
+    void Play_Vedio(record_time begin,record_time end,int port);
+    void Stop_vedio();
+
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
@@ -37,15 +45,19 @@ private slots:
     void showTime();
 
 private:
+    Client_SDK sdk;
+
     Ui::MainWindow *ui;
     QLCDNumber *time;
     QStackedWidget * qs_main;
-
 
     Scene1 *ps1;
     scene2 *ps2;
     scene3 *ps3;
     scene4 *ps4;
+
+    std::shared_ptr<client> ptr_client;
+    QTimer * timer;
 //    s1_play *ps1_play;
 //    s1_jk *ps1_jk;
 //    s1_pz *ps1_pz;

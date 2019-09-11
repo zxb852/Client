@@ -14,6 +14,7 @@ class s1_play : public QDialog
 public:
     explicit s1_play(QWidget *parent = nullptr);
     ~s1_play();
+    WId getplaywnd(int type);
 
 private:
     Ui::s1_play *ui;

@@ -7,10 +7,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    sdk.SDK_Init();
+    sdk.SDK_Connect("192.0.0.63",8000,"admin","123456ABC");
+
     ps1=new Scene1();
     ps2=new scene2();
     ps3=new scene3();
     ps4=new scene4();
+    connect(ps4, SIGNAL(Download_Vedio(record_time,record_time,int)), this, SLOT(Download_Vedio(record_time,record_time,int)));  //用一个定时信号来更改时间
+    connect(ps4, SIGNAL(Capture()), this, SLOT(Capture()));  //用一个定时信号来更改时间
+    connect(ps4, SIGNAL(Play_Vedio(record_time,record_time,int)), this, SLOT(Play_Vedio(record_time,record_time,int)));  //用一个定时信号来更改时间
+    connect(ps4, SIGNAL(Stop_vedio()), this, SLOT(Stop_vedio()));  //用一个定时信号来更改时间
 
     qs_main=new QStackedWidget();
     qs_main->addWidget(ps1);
@@ -35,11 +42,38 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));  //用一个定时信号来更改时间
     timer->start(100);  //启动定时
 
+    NET_DVR_PREVIEWINFO struPlayInfo;
+    struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
+    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setsocket(std::shared_ptr<client> ptr)
+{
+    ptr_client=ptr;
+    //timer->start(1000/60);
+    qDebug()<<"recv!"<<endl;
+}
+
+void MainWindow::Download_Vedio(record_time begin,record_time end,int port)
+{
+    sdk.Vedio_record(sdk.v_lUserID[0],begin,end,true,ps4->getplaywid(),port,ps4);
+}
+void MainWindow::Capture()
+{
+}
+void MainWindow::Play_Vedio(record_time begin,record_time end,int port)
+{
+    sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,NULL,port,ps4);
+}
+void MainWindow::Stop_vedio()
+{
+    sdk.Vedio_stop(sdk.v_lUserID[0]);
 }
 
 void MainWindow::on_pushButton_clicked()

@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>报警阈值设定</string>
+    <string>报警参数设定</string>
    </property>
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
@@ -111,7 +111,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>系统参数</string>
+    <string>配置1</string>
    </property>
   </widget>
   <widget class="QScrollArea" name="scrollArea_2">
@@ -147,7 +147,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>通道参数</string>
+    <string>配置2</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_7">
@@ -160,98 +160,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>网络参数</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_8">
-   <property name="geometry">
-    <rect>
-     <x>990</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>报警输出</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_9">
-   <property name="geometry">
-    <rect>
-     <x>900</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>IP通道</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_10">
-   <property name="geometry">
-    <rect>
-     <x>1080</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>本地输出</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_11">
-   <property name="geometry">
-    <rect>
-     <x>1440</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>数据透传</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_12">
-   <property name="geometry">
-    <rect>
-     <x>1350</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>零通道</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_13">
-   <property name="geometry">
-    <rect>
-     <x>1260</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>设备维护</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_14">
-   <property name="geometry">
-    <rect>
-     <x>1170</x>
-     <y>40</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>储存管理</string>
+    <string>配置3</string>
    </property>
   </widget>
   <zorder>groupBox</zorder>
@@ -259,13 +168,6 @@
   <zorder>pushButton_5</zorder>
   <zorder>pushButton_6</zorder>
   <zorder>pushButton_7</zorder>
-  <zorder>pushButton_8</zorder>
-  <zorder>pushButton_9</zorder>
-  <zorder>pushButton_10</zorder>
-  <zorder>pushButton_11</zorder>
-  <zorder>pushButton_12</zorder>
-  <zorder>pushButton_13</zorder>
-  <zorder>pushButton_14</zorder>
  </widget>
  <resources/>
  <connections/>

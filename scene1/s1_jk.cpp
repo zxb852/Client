@@ -29,49 +29,36 @@ s1_jk::s1_jk(QWidget *parent) :
     treeWidget->addTopLevelItem(D);
     treeWidget->addTopLevelItem(E);
 
-    settw(twconfig_user::common_user,twconfig_state::heat_on);
-    settw(twconfig_user::common_user,twconfig_state::fire_on);
-    settw(twconfig_user::common_user,twconfig_state::water_on);
-    settw(twconfig_user::common_user,twconfig_state::flash_on);
+    settw(common_user,heat_on);
+    settw(common_user,fire_on);
+    settw(common_user,water_on);
+    settw(common_user,flash_on);
 
-
-    char pPath[256] = {0};
-    getcwd(pPath, 256);
-    QString basedir(pPath);
-    qDebug()<<basedir;
-
-    QMap<QString,QIcon> m_publicIconMap;
-    m_publicIconMap[QStringLiteral("positon")] =QIcon(basedir+QStringLiteral("/icon/position.jpg"));
-    m_publicIconMap[QStringLiteral("alarm")] =QIcon(basedir+QStringLiteral("/icon/am.jpg"));
-    m_publicIconMap[QStringLiteral("time")] =QIcon(basedir+QStringLiteral("/icon/time.jpg"));
 
     //new tree model
-    QStandardItemModel *model=new QStandardItemModel(this);
+    model=new QStandardItemModel(this);
     model->setHorizontalHeaderLabels(QStringList()<<"故障时间"<<"故障地点"<<"故障类型");
-
-    //new tree element 1 level
-    QStandardItem* itemProject = new QStandardItem(m_publicIconMap["time"],QStringLiteral("2019-09-02 05:12:10"));
-    QStandardItem* itemProject2 = new QStandardItem(m_publicIconMap["time"],QStringLiteral("2019-09-04 10:32:41"));
-    QStandardItem* itemProject3 = new QStandardItem(m_publicIconMap["time"],QStringLiteral("2019-09-04 16:48:02"));
-
-
-    model->appendRow(itemProject);
-    model->appendRow(itemProject2);
-    model->appendRow(itemProject3);
-    model->setItem(model->indexFromItem(itemProject).row(),1,new QStandardItem("1号阀厅"));
-    model->setItem(model->indexFromItem(itemProject).row(),2,new QStandardItem("过热"));
-
-    model->setItem(model->indexFromItem(itemProject2).row(),1,new QStandardItem("1号阀厅"));
-    model->setItem(model->indexFromItem(itemProject2).row(),2,new QStandardItem("渗水"));
-
-    model->setItem(model->indexFromItem(itemProject3).row(),1,new QStandardItem("3号阀厅"));
-     model->setItem(model->indexFromItem(itemProject3).row(),2,new QStandardItem("放电"));
 
     ui->treeView_2->setModel(model);
     ui->treeView_2->setColumnWidth(0,200);
     ui->treeView_2->setColumnWidth(1,150);
     ui->treeView_2->setColumnWidth(2,100);
     ui->treeView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    addtv(2019,6,2,12,5,45,"1号阀厅",heat_ft);
+    addtv(2019,6,6,15,12,4,"3号阀厅",water_ft);
+    addtv(2019,6,15,2,45,5,"2号阀厅",heat_ft);
+    addtv(2019,6,22,1,32,26,"2号阀厅",flash_ft);
+    addtv(2019,7,1,16,15,32,"2号阀厅",heat_ft);
+    addtv(2019,7,8,22,2,56,"3号阀厅",heat_ft);
+    addtv(2019,7,16,7,12,42,"1号阀厅",water_ft);
+    addtv(2019,7,29,9,32,4,"1号阀厅",heat_ft);
+    addtv(2019,8,6,2,15,32,"2号阀厅",flash_ft);
+    addtv(2019,8,15,15,35,12,"2号阀厅",heat_ft);
+    addtv(2019,8,20,16,25,25,"2号阀厅",water_ft);
+    addtv(2019,8,21,17,46,45,"3号阀厅",fire_ft);
+    addtv(2019,9,1,20,53,42,"1号阀厅",flash_ft);
+    addtv(2019,9,5,12,8,32,"1号阀厅",heat_ft);
 }
 
 s1_jk::~s1_jk()
@@ -90,7 +77,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(255,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(user==twconfig_user::common_user)
+    else if(user==common_user)
     {
         treeWidget->setCurrentItem(A);
         A->setText(1,"普通用户");
@@ -107,7 +94,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->setCurrentItem(nullptr);
     }
 
-    if(state==twconfig_state::heat_on)
+    if(state==heat_on)
     {
         treeWidget->setCurrentItem(B);
         B->setText(1,"开启");
@@ -115,7 +102,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(0,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::heat_off)
+    else if(state==heat_off)
     {
         treeWidget->setCurrentItem(B);
         B->setText(1,"关闭");
@@ -123,7 +110,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(255,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::heat_am)
+    else if(state==heat_am)
     {
         treeWidget->setCurrentItem(B);
         B->setText(1,"报警");
@@ -132,7 +119,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->setCurrentItem(nullptr);
     }
 
-    if(state==twconfig_state::fire_on)
+    if(state==fire_on)
     {
         treeWidget->setCurrentItem(C);
         C->setText(1,"开启");
@@ -140,7 +127,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(0,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::fire_off)
+    else if(state==fire_off)
     {
         treeWidget->setCurrentItem(C);
         C->setText(1,"关闭");
@@ -148,7 +135,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(255,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::fire_am)
+    else if(state==fire_am)
     {
         treeWidget->setCurrentItem(C);
         C->setText(1,"报警");
@@ -157,7 +144,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->setCurrentItem(nullptr);
     }
 
-    if(state==twconfig_state::water_on)
+    if(state==water_on)
     {
         treeWidget->setCurrentItem(D);
         D->setText(1,"开启");
@@ -165,7 +152,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(0,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::water_off)
+    else if(state==water_off)
     {
         treeWidget->setCurrentItem(D);
         D->setText(1,"关闭");
@@ -173,7 +160,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(255,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::water_am)
+    else if(state==water_am)
     {
         treeWidget->setCurrentItem(D);
         D->setText(1,"报警");
@@ -182,7 +169,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->setCurrentItem(nullptr);
     }
 
-    if(state==twconfig_state::flash_on)
+    if(state==flash_on)
     {
         treeWidget->setCurrentItem(E);
         E->setText(1,"开启");
@@ -190,7 +177,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(0,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::flash_off)
+    else if(state==flash_off)
     {
         treeWidget->setCurrentItem(E);
         E->setText(1,"关闭");
@@ -198,7 +185,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->currentItem()->setTextColor(1,QColor(255,0,0));
         treeWidget->setCurrentItem(nullptr);
     }
-    else if(state==twconfig_state::flash_am)
+    else if(state==flash_am)
     {
         treeWidget->setCurrentItem(E);
         E->setText(1,"报警");
@@ -207,3 +194,34 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         treeWidget->setCurrentItem(nullptr);
     }
 }
+
+ void s1_jk::addtv(int year,int month, int day, int hour, int mins, int sec, QString pos, ftypes ft)
+{
+    char pPath[256] = {0};
+    getcwd(pPath, 256);
+    QString basedir(pPath);
+
+    QString date=QString::number(year)+"-"+QString::number(month)+"-"+QString::number(day)+" "+QString::number(hour)+":"+QString::number(mins)+":"+QString::number(sec);
+    QStandardItem* itemProject = new QStandardItem(QIcon(basedir+QStringLiteral("/icon/time.jpg")),date);
+    model->appendRow(itemProject);
+    model->setItem(model->indexFromItem(itemProject).row(),1,new QStandardItem(pos));
+    if(ft==heat_ft)
+        model->setItem(model->indexFromItem(itemProject).row(),2,new QStandardItem("过热"));
+    else if(ft==fire_ft)
+        model->setItem(model->indexFromItem(itemProject).row(),2,new QStandardItem("明火"));
+    else if(ft==water_ft)
+        model->setItem(model->indexFromItem(itemProject).row(),2,new QStandardItem("渗水"));
+    else if(ft==flash_ft)
+        model->setItem(model->indexFromItem(itemProject).row(),2,new QStandardItem("放电"));
+}
+
+
+
+
+
+
+
+
+
+
+

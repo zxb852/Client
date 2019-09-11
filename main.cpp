@@ -8,7 +8,8 @@ int main(int argc, char *argv[])
 
     Dialog_login D_login;
     w.setWindowFlags(w.windowFlags() &~ Qt::WindowMinMaxButtonsHint);
-    //QObject::connect(&D_login, SIGNAL(creatsocket( std::shared_ptr<client> )), &w, SLOT(setsocket(std::shared_ptr<client>)));
+    QObject::connect(&D_login, SIGNAL(creatsocket( std::shared_ptr<client> )), &w, SLOT(setsocket(std::shared_ptr<client>)));
+
 
     D_login.show();
     if(D_login.exec() == QDialog::Accepted)

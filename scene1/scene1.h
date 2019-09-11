@@ -19,6 +19,10 @@ class Scene1 : public QDialog
 public:
     explicit Scene1(QWidget *parent = nullptr);
     ~Scene1();
+    WId getplaywnd(int type)
+    {
+        return ps1_play->getplaywnd(type);
+    }
 
 private slots:
     void on_pushButton_3_clicked();

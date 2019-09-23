@@ -2,7 +2,7 @@
 #define S1_PLAY_H
 
 #include <QDialog>
-
+#include <QLabel>
 namespace Ui {
 class s1_play;
 }
@@ -15,6 +15,7 @@ public:
     explicit s1_play(QWidget *parent = nullptr);
     ~s1_play();
     WId getplaywnd(int type);
+    QLabel *getplaywnd4();
 
 private:
     Ui::s1_play *ui;

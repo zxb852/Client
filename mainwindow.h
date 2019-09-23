@@ -12,7 +12,9 @@
 #include "scene3.h"
 #include "scene4.h"
 #include "client_sdk.h"
-
+using std::vector;
+using std::pair;
+using std::string;
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +23,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -42,26 +45,33 @@ private slots:
 
     void on_pushButton_4_clicked();
 
-    void showTime();
+    void playvedio(int mode);
+
+    void Update();
+
 
 private:
-    Client_SDK sdk;
-
     Ui::MainWindow *ui;
+
+    Client_SDK sdk;
+    std::shared_ptr<client> ptr_client;
+
     QLCDNumber *time;
     QStackedWidget * qs_main;
+    vector<pair<state_mes,vector<string>>> v_alarm;
 
     Scene1 *ps1;
     scene2 *ps2;
     scene3 *ps3;
     scene4 *ps4;
 
-    std::shared_ptr<client> ptr_client;
+
+    std::string base;
     QTimer * timer;
-//    s1_play *ps1_play;
-//    s1_jk *ps1_jk;
-//    s1_pz *ps1_pz;
-//    s1_yt *ps1_yt;
+
+    void showTime();
 };
+Mat QImage2cvMat(QImage image);
+QImage MatToQImage(const cv::Mat& mat) ;
 
 #endif // MAINWINDOW_H

@@ -32,5 +32,10 @@ WId s1_play::getplaywnd(int type)
     else if(type==1)
         ui->label_2->winId();
     else if(type==1)
-        ui->label_3->winId();
+        ui->label_4->winId();
+}
+
+QLabel *s1_play::getplaywnd4()
+{
+    return ui->label_3;
 }

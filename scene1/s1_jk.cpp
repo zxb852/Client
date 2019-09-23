@@ -195,7 +195,7 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
     }
 }
 
- void s1_jk::addtv(int year,int month, int day, int hour, int mins, int sec, QString pos, ftypes ft)
+void s1_jk::addtv(int year,int month, int day, int hour, int mins, int sec, QString pos, ftypes ft)
 {
     char pPath[256] = {0};
     getcwd(pPath, 256);
@@ -215,13 +215,28 @@ void s1_jk::settw(twconfig_user user,twconfig_state state)
         model->setItem(model->indexFromItem(itemProject).row(),2,new QStandardItem("放电"));
 }
 
+int s1_jk::getselect()
+{
+    return ui->treeView_2->currentIndex().row();
+}
 
-
-
-
-
-
-
-
-
-
+//rgb
+void s1_jk::on_pushButton_clicked()
+{
+    emit playvedio(1);
+}
+//ir
+void s1_jk::on_pushButton_2_clicked()
+{
+    emit playvedio(2);
+}
+//uv
+void s1_jk::on_pushButton_3_clicked()
+{
+    emit playvedio(3);
+}
+//vedio
+void s1_jk::on_pushButton_4_clicked()
+{
+    emit playvedio(4);
+}

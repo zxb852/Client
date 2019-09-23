@@ -24,6 +24,11 @@ public:
         return ps1_play->getplaywnd(type);
     }
 
+    QLabel *getplaywnd4()
+    {
+        return ps1_play->getplaywnd4();
+    }
+
 private slots:
     void on_pushButton_3_clicked();
 
@@ -37,6 +42,7 @@ private:
     QStackedWidget * qs_s1_play;
     QStackedWidget * qs_s1_right;
 
+public:
     s1_play *ps1_play;
     s1_jk *ps1_jk;
     s1_pz *ps1_pz;

@@ -5,9 +5,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
+    w.setWindowFlags(w.windowFlags() &~ Qt::WindowMinMaxButtonsHint);
 
     Dialog_login D_login;
-    w.setWindowFlags(w.windowFlags() &~ Qt::WindowMinMaxButtonsHint);
     QObject::connect(&D_login, SIGNAL(creatsocket( std::shared_ptr<client> )), &w, SLOT(setsocket(std::shared_ptr<client>)));
 
 

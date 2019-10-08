@@ -44,8 +44,21 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start(100);  //启动定时
 
     NET_DVR_PREVIEWINFO struPlayInfo;
+    //RGB
     struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
+    struPlayInfo.lChannel = 1; //预览通道号
     sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+
+    //IR
+    struPlayInfo.hPlayWnd=ps1->getplaywnd(2);
+    struPlayInfo.lChannel = 2; //预览通道号
+    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+
+    //UV
+    struPlayInfo.hPlayWnd=ps1->getplaywnd(3);
+    struPlayInfo.lChannel = 3; //预览通道号
+    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+
 
 }
 
@@ -66,14 +79,20 @@ void MainWindow::setsocket(std::shared_ptr<client> ptr)
 
 void MainWindow::Download_Vedio(record_time begin,record_time end,int port)
 {
-    sdk.Vedio_record(sdk.v_lUserID[0],begin,end,true,ps4->getplaywid(),port,ps4);
+    record_time now;
+    now.settimenow();
+    if(begin < end && end < now)
+        sdk.Vedio_record(sdk.v_lUserID[0],begin,end,true,ps4->getplaywid(),port,ps4);
 }
 void MainWindow::Capture()
 {
 }
 void MainWindow::Play_Vedio(record_time begin,record_time end,int port)
 {
-    sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,NULL,port,ps4);
+    record_time now;
+    now.settimenow();
+    if(begin < end && end < now)
+        sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,NULL,port,ps4);
 }
 void MainWindow::Stop_vedio()
 {

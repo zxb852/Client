@@ -55,7 +55,6 @@ bool Client_SDK::SDK_Connect(char *ip,WORD port,char *username,char *password)
 bool Client_SDK::Vedio_Stream_Set(LONG lUserID,NET_DVR_PREVIEWINFO struPlayInfo,bool ishard)
 {
     LONG lRealPlayHandle;
-    struPlayInfo.lChannel = 1; //预览通道号
     struPlayInfo.dwStreamType = 0; //0-主码流,1-子码流,2-码流 3,3-码流 4,以此类推
     struPlayInfo.dwLinkMode = 0;//0- TCP 方式,1- UDP 方式,2- 多播方式,3- RTP 方式,4-RTP/RTSP,5-RSTP/HTTP
     struPlayInfo.bBlocked = 1;//0- 非阻塞取流,1- 阻塞取流

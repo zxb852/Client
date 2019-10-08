@@ -29,9 +29,9 @@ WId s1_play::getplaywnd(int type)
 {
     if(type==1)
         ui->label->winId();
-    else if(type==1)
+    else if(type==2)
         ui->label_2->winId();
-    else if(type==1)
+    else if(type==3)
         ui->label_4->winId();
 }
 

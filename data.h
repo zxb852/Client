@@ -35,6 +35,21 @@ struct record_time
         sec=p->tm_sec;
     }
 
+    void settimenow()
+    {
+        time_t timep;
+        time(&timep);
+        struct tm *nowTime =localtime(&timep);
+        nowTime->tm_year += 1900;
+        nowTime->tm_mon += 1;
+        year=nowTime->tm_year;
+        month =nowTime->tm_mon;
+        day=nowTime->tm_mday;
+        hour=nowTime->tm_hour;
+        min=nowTime->tm_min;
+        sec=nowTime->tm_sec;
+    }
+
     bool operator <(const record_time &m)
     {
         if(year<m.year)

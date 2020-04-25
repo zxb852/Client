@@ -30,7 +30,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void setsocket(std::shared_ptr<client> ptr_client);
+    void setsocket(std::shared_ptr<Client> ptr_client);
 
     void Download_Vedio(record_time begin,record_time end,int port);
     void Capture();
@@ -54,11 +54,11 @@ private:
     Ui::MainWindow *ui;
 
     Client_SDK sdk;
-    std::shared_ptr<client> ptr_client;
+    std::shared_ptr<Client> ptr_client;
 
     QLCDNumber *time;
     QStackedWidget * qs_main;
-    vector<pair<state_mes,vector<string>>> v_alarm;
+    vector<pair<State_mes,vector<string>>> v_alarm;
 
     Scene1 *ps1;
     scene2 *ps2;

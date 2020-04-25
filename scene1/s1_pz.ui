@@ -129,7 +129,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>图片保存地址</string>
+     <string>故障保存地址</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser">
@@ -188,7 +188,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>视频保存地址</string>
+     <string>录像保存地址</string>
     </property>
    </widget>
   </widget>

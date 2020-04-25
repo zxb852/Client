@@ -6,7 +6,9 @@
 #include <QDebug>
 #include <string>
 #include <memory>
-#include "client.h"
+#include "socket_connect_v2.h"
+#include <opencv2/opencv.hpp>
+using namespace cv;
 
 namespace Ui {
 class Dialog_login;
@@ -21,7 +23,7 @@ public:
     ~Dialog_login();
 
 signals:
-        void creatsocket( std::shared_ptr<client> );
+        void creatsocket( std::shared_ptr<Client> );
 
 private slots:
     void on_B_login_clicked();

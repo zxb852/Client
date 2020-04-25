@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     sdk.SDK_Init();
-    sdk.SDK_Connect("192.0.0.63",8000,"admin","123456ABC");
+    sdk.SDK_Connect("192.168.1.2",8000,"admin","asdf1234");
 
     ps1=new Scene1();
     ps2=new scene2();
@@ -46,17 +46,17 @@ MainWindow::MainWindow(QWidget *parent) :
     NET_DVR_PREVIEWINFO struPlayInfo;
     //RGB
     struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
-    struPlayInfo.lChannel = 1; //预览通道号
+    struPlayInfo.lChannel = 33; //预览通道号
     sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
     //IR
     struPlayInfo.hPlayWnd=ps1->getplaywnd(2);
-    struPlayInfo.lChannel = 2; //预览通道号
+    struPlayInfo.lChannel = 34; //预览通道号
     sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
     //UV
     struPlayInfo.hPlayWnd=ps1->getplaywnd(3);
-    struPlayInfo.lChannel = 3; //预览通道号
+    struPlayInfo.lChannel = 35; //预览通道号
     sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
 
@@ -67,14 +67,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setsocket(std::shared_ptr<client> ptr)
+void MainWindow::setsocket(std::shared_ptr<Client> ptr)
 {
     ptr_client=ptr;
-    base="data/";
-    ptr_client->setbasefile(base);
+    base=ptr_client->getbasefile();
     //timer->start(1000/60);
     ptr_client->updata_alarm_data();
-    qDebug()<<"recv!"<<endl;
 }
 
 void MainWindow::Download_Vedio(record_time begin,record_time end,int port)
@@ -201,9 +199,10 @@ void MainWindow::Update()
 
     if(ptr_client!=nullptr)
     {
-        state_mes mes;
-        char tid;
-        if(ptr_client->recv_buff_pop(mes,tid))
+        State_mes mes;
+        unsigned short src,cot;
+        //if(ptr_client->recv_buff_pop(mes,tid))
+        if(ptr_client->recvbuff_pop(mes,src,cot))
         {
             string filename=mes.tostring();
             string pic_rgb=base + filename+ "/" +filename+ "_rgb.jpg";
@@ -217,7 +216,7 @@ void MainWindow::Update()
             names.push_back(pic_uv);
             names.push_back(vedio_rgb);
 
-            v_alarm.push_back(pair<state_mes,vector<string>>(mes,names));
+            v_alarm.push_back(pair<State_mes,vector<string>>(mes,names));
 
             qDebug()<<(int)mes.mode;
             ps1->ps1_jk->addtv(mes.year,mes.mon,mes.day,mes.hour,mes.min,mes.sec,"1号阀厅",ftypes(mes.mode));

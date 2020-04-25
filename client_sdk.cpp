@@ -58,13 +58,11 @@ bool Client_SDK::Vedio_Stream_Set(LONG lUserID,NET_DVR_PREVIEWINFO struPlayInfo,
     struPlayInfo.dwStreamType = 0; //0-主码流,1-子码流,2-码流 3,3-码流 4,以此类推
     struPlayInfo.dwLinkMode = 0;//0- TCP 方式,1- UDP 方式,2- 多播方式,3- RTP 方式,4-RTP/RTSP,5-RSTP/HTTP
     struPlayInfo.bBlocked = 1;//0- 非阻塞取流,1- 阻塞取流
+    struPlayInfo.dwDisplayBufNum = 1;
 
-    if(ishard)
-        lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &struPlayInfo, nullptr, nullptr);
-    else{
-        struPlayInfo.hPlayWnd = 0; //需要 SDK 解码时句柄设为有效值,仅取流不解码时可设为空
-        lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &struPlayInfo, g_RealDataCallBack_V30, nullptr);
-    }
+
+    lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &struPlayInfo, nullptr, nullptr);
+
     if (lRealPlayHandle < 0)
     {
         printf("NET_DVR_RealPlay_V40 error\n");

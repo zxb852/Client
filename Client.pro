@@ -33,11 +33,13 @@ INCLUDEPATH += ./scene3 \
                ./sdk64  \
                ./sdk64/HCNetSDKCom  \
                ./sdk64/include  \
-               "/home/zxb/SRC_C/socket_connect/lib"\
-               "/home/zxb/SRC_C/socket_connect/src/client"\
-              /usr/local/include \
-              /usr/local/include/opencv \
-              /usr/local/include/opencv2
+               "/home/zxb/SRC_C/Socket_connect_v2/socket_connect_v2"\
+               "/home/zxb/SRC_C/Socket_connect_v2/socket_connect_v2/base"\
+               "/home/zxb/SRC_C/Socket_connect_v2/socket_connect_v2/systems"\
+               "/home/zxb/SRC_C/Socket_connect_v2/socket_connect_v2/types"\
+               "/usr/local/include" \
+               "/usr/local/include/opencv" \
+               "/usr/local/include/opencv2"
 
 LIBS += /usr/local/lib/libopencv_calib3d.so\
         /usr/local/lib/libopencv_core.so\
@@ -81,12 +83,17 @@ SOURCES += \
         scene3/scene3.cpp \
         scene3/s3_config1_xt.cpp \
         scene4/scene4.cpp \
-        ../../SRC_C/socket_connect/lib/socket_connect.cpp \
-        ../../SRC_C/socket_connect/src/client/client.cpp \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/socket_connect_v2.cpp   \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/base/socket_base.cpp   \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/systems/imp.cpp   \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/systems/log.cpp   \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/frame.cpp   \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/type_base.cpp   \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/types.cpp
 
 HEADERS += \
         client_sdk.h \
-    data.h \
+        data.h \
         dialog_login.h \
         mainwindow.h \
         scene1/s1_jk.h \
@@ -107,8 +114,7 @@ HEADERS += \
         scene4/scene4.h \
         sdk64/include/HCNetSDK.h \
         sdk64/include/LinuxPlayM4.h \
-        ../../SRC_C/socket_connect/lib/socket_connect.h \
-        ../../SRC_C/socket_connect/src/client/client.h \
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/socket_connect_v2.h
 
 FORMS += \
         dialog_login.ui \

@@ -7,17 +7,17 @@ s1_play::s1_play(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPixmap qpix("./pic/heat.jpg");
-    qpix=qpix.scaled(QSize(512,384));
-    ui->label_2->setPixmap(qpix);
+//    QPixmap qpix("./pic/heat.jpg");
+//    qpix=qpix.scaled(QSize(512,384));
+//    ui->label_2->setPixmap(qpix);
 
-    QPixmap qpix2("./pic/flash.jpg");
-    qpix2=qpix2.scaled(QSize(512,384));
-    ui->label_4->setPixmap(qpix2);
+//    QPixmap qpix2("./pic/flash.jpg");
+//    qpix2=qpix2.scaled(QSize(512,384));
+//    ui->label_4->setPixmap(qpix2);
 
-    QPixmap qpix3("./pic/heat2.jpg");
-    qpix3=qpix3.scaled(QSize(512,384));
-    ui->label_3->setPixmap(qpix3);
+//    QPixmap qpix3("./pic/heat2.jpg");
+//    qpix3=qpix3.scaled(QSize(512,384));
+//    ui->label_3->setPixmap(qpix3);
 }
 
 s1_play::~s1_play()

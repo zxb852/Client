@@ -25,17 +25,30 @@ void Dialog_login::on_B_login_clicked()
     std::string str_user=tuser.toStdString();
     std::string str_password=tpassword.toStdString();
 
-    std::shared_ptr<client> ptr_client=std::make_shared<client>();
-    if( ptr_client->s_connect(str_ip.c_str(),int_port) )
+    std::shared_ptr<Client> ptr_client=std::make_shared<Client>();
+    if (!ptr_client->s_connect(str_ip.c_str(),int_port))
+    //if (!client.s_connect("39.108.229.151 ", 8010))
     {
-        ptr_client->send_buff_push(login_mes(str_user, str_password));
-        emit creatsocket(ptr_client);
-        this->accept();
+        qDebug()<< "connect failed"<< endl;
+        this->reject();
     }
-    else
+
+    cout << "connect successfully!" << endl;
+    Login_mes login_mes("client","123");
+    ptr_client->sendbuff_push(login_mes);
+    while (!ptr_client->recvbuff_pop(login_mes));
+    if (login_mes.confirm != 3)
     {
-        qDebug()<< "login failed"<< endl;
+        qDebug()<< "Login failed"<< endl;
+        this->reject();
     }
+    cout << "login successfully!" << endl;
+    login_mes.confirm = 1;
+    ptr_client->sendbuff_push(login_mes);
+
+    ptr_client->setbasefile("/home/zxb/SRC_C/data/Client_data/");
+    emit creatsocket(ptr_client);
+
     this->accept();
 }
 

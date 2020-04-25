@@ -45,20 +45,6 @@ s1_jk::s1_jk(QWidget *parent) :
     ui->treeView_2->setColumnWidth(2,100);
     ui->treeView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    addtv(2019,6,2,12,5,45,"1号阀厅",heat_ft);
-    addtv(2019,6,6,15,12,4,"3号阀厅",water_ft);
-    addtv(2019,6,15,2,45,5,"2号阀厅",heat_ft);
-    addtv(2019,6,22,1,32,26,"2号阀厅",flash_ft);
-    addtv(2019,7,1,16,15,32,"2号阀厅",heat_ft);
-    addtv(2019,7,8,22,2,56,"3号阀厅",heat_ft);
-    addtv(2019,7,16,7,12,42,"1号阀厅",water_ft);
-    addtv(2019,7,29,9,32,4,"1号阀厅",heat_ft);
-    addtv(2019,8,6,2,15,32,"2号阀厅",flash_ft);
-    addtv(2019,8,15,15,35,12,"2号阀厅",heat_ft);
-    addtv(2019,8,20,16,25,25,"2号阀厅",water_ft);
-    addtv(2019,8,21,17,46,45,"3号阀厅",fire_ft);
-    addtv(2019,9,1,20,53,42,"1号阀厅",flash_ft);
-    addtv(2019,9,5,12,8,32,"1号阀厅",heat_ft);
 }
 
 s1_jk::~s1_jk()

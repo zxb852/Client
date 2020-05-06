@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QLCDNumber>
 #include "dialog_login.h"
+#include "dialog_alarm.h"
 #include "scene1.h"
 #include "scene2.h"
 #include "scene3.h"
@@ -28,6 +29,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+signals:
+    void returnforplot(string name);
 
 private slots:
     void setsocket(std::shared_ptr<Client> ptr_client);
@@ -49,6 +52,10 @@ private slots:
 
     void Update();
 
+    void ptz_move(int mode,int speed);
+    void ptz_prset(int mode,int pnum);
+    void cmd1();
+    void callforplot(QDate);
 
 private:
     Ui::MainWindow *ui;
@@ -56,7 +63,7 @@ private:
     Client_SDK sdk;
     std::shared_ptr<Client> ptr_client;
 
-    QLCDNumber *time;
+    QLCDNumber *ldctime;
     QStackedWidget * qs_main;
     vector<pair<State_mes,vector<string>>> v_alarm;
 

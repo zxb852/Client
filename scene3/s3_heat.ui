@@ -19,27 +19,17 @@
      <x>20</x>
      <y>10</y>
      <width>461</width>
-     <height>211</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="title">
     <string>一般缺陷</string>
    </property>
-   <widget class="QTreeView" name="treeView">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>421</width>
-      <height>131</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>208</x>
-      <y>170</y>
+      <y>160</y>
       <width>111</width>
       <height>25</height>
      </rect>
@@ -56,7 +46,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>170</y>
+      <y>160</y>
       <width>111</width>
       <height>25</height>
      </rect>
@@ -69,34 +59,49 @@
       <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</iconset>
     </property>
    </widget>
+   <widget class="QTreeWidget" name="treeWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>411</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>规则类型</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>新建列</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>上限</string>
+     </property>
+    </column>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>220</y>
+     <y>190</y>
      <width>461</width>
-     <height>211</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="title">
     <string>严重缺陷</string>
    </property>
-   <widget class="QTreeView" name="treeView_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>421</width>
-      <height>131</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
       <x>208</x>
-      <y>170</y>
+      <y>160</y>
       <width>111</width>
       <height>25</height>
      </rect>
@@ -113,7 +118,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>170</y>
+      <y>160</y>
       <width>111</width>
       <height>25</height>
      </rect>
@@ -126,34 +131,49 @@
       <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</iconset>
     </property>
    </widget>
+   <widget class="QTreeWidget" name="treeWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>411</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string notr="true">规则类型</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>下限</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>上限</string>
+     </property>
+    </column>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>430</y>
+     <y>370</y>
      <width>461</width>
-     <height>211</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="title">
     <string>危急缺陷</string>
    </property>
-   <widget class="QTreeView" name="treeView_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>421</width>
-      <height>131</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
       <x>208</x>
-      <y>170</y>
+      <y>160</y>
       <width>111</width>
       <height>25</height>
      </rect>
@@ -170,7 +190,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>170</y>
+      <y>160</y>
       <width>111</width>
       <height>25</height>
      </rect>
@@ -183,6 +203,44 @@
       <normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</normaloff>../build-Client-Desktop_Qt_5_13_0_GCC_64bit-Release/icon/sub.jpg</iconset>
     </property>
    </widget>
+   <widget class="QTreeWidget" name="treeWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>411</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string notr="true">规则类型</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>新建列</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>上限</string>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_7">
+   <property name="geometry">
+    <rect>
+     <x>328</x>
+     <y>584</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>保存修改</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -1,6 +1,16 @@
 #ifndef CLIENT_SDK_H
 #define CLIENT_SDK_H
 
+#define Ptz_up 1
+#define Ptz_down 2
+#define Ptz_left 3
+#define Ptz_right 4
+#define Ptz_fup 5
+#define Ptz_fdown 6
+#define Ptz_padd 1
+#define Ptz_pdel 2
+#define Ptz_pgoto 3
+
 #include "HCNetSDK.h"
 #include "LinuxPlayM4.h"
 #include <QList>
@@ -25,6 +35,10 @@ public:
     //录像接口
     bool Vedio_record(LONG lUserID,record_time begin,record_time end,bool isdownload =true,WId wnd =NULL,int port=1,scene4 *ps4=nullptr);
     void Vedio_stop(LONG lUserID);
+    bool Vedio_capture(std::string sFileName);
+    // 云台接口
+    bool Ptz_move(int mode, int speed, int begorend);
+    bool Ptz_preset(int mode, int pnum);
     //释放资源
     void SDK_Close();
 private:

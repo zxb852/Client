@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QtCharts>
 #include <QFile>
+#include <string>
+using std::string;
 
 namespace Ui {
 class scene2;
@@ -16,9 +18,13 @@ class scene2 : public QDialog
 public:
     explicit scene2(QWidget *parent = nullptr);
     ~scene2();
+signals:
+    void callforplot(QDate);
+
 
 private slots:
     void on_calendarWidget_selectionChanged();
+    void returnforplot(string name);
 
 private:
     Ui::scene2 *ui;

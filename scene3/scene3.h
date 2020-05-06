@@ -48,11 +48,12 @@ private:
 
     s3_fire *ps3_fire;
     s3_flash *ps3_flash;
-    s3_heat *ps3_heat;
     s3_water *ps3_water;
     s3_config1_xt *ps3_config1_xt;
     s3_config2 *ps3_config2;
     s3_config3 *ps3_config3;
+public:
+    s3_heat *ps3_heat;
 };
 
 #endif // SCENE3_H

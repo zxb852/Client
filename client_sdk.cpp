@@ -36,16 +36,25 @@ bool Client_SDK::SDK_Connect(char *ip,WORD port,char *username,char *password)
 {
     NET_DVR_DEVICEINFO_V30 struDeviceInfo;
     LONG lUserID = NET_DVR_Login_V30(ip, port, username, password, &struDeviceInfo);
-    v_lUserID.push_back(lUserID);
-
     if (lUserID < 0){
         printf("Login error, %d\n", NET_DVR_GetLastError());
         NET_DVR_Cleanup();
         return false;
     }
-    else {
-        qDebug()<<"lUserID is "<<lUserID;
+    else
+        qDebug()<<"NVR lUserID is "<<lUserID;
+    v_lUserID.push_back(lUserID);
+
+//  登录rgb设备，控制云台
+//    lUserID = NET_DVR_Login_V30("rgb add", "port", "username", "password", &struDeviceInfo);
+    if (lUserID < 0){
+        printf("Login error, %d\n", NET_DVR_GetLastError());
+        NET_DVR_Cleanup();
+        return false;
     }
+    else
+        qDebug()<<"UV lUserID is "<<lUserID;
+    v_lUserID.push_back(lUserID);
 
     //设置异常消息回调函数
     NET_DVR_SetExceptionCallBack_V30(0, nullptr,g_ExceptionCallBack, nullptr);
@@ -156,15 +165,12 @@ bool Client_SDK::Vedio_record(LONG lUserID,record_time begin,record_time end,boo
             usleep(5000);
         }
         ps4->process(100);
-    }
 
-
-    if(!NET_DVR_StopPlayBack(hPlayback))
-    {
-        printf("failed to stop file [%d]\n",NET_DVR_GetLastError());
-        NET_DVR_Logout(lUserID);
-        NET_DVR_Cleanup();
-        return false;
+        if(!NET_DVR_StopGetFile(hPlayback))
+        {
+            printf("failed to stop get file [%d]\n",NET_DVR_GetLastError());
+            return false;
+        }
     }
     return true;
 }
@@ -172,15 +178,70 @@ bool Client_SDK::Vedio_record(LONG lUserID,record_time begin,record_time end,boo
 void Client_SDK::Vedio_stop(LONG lUserID)
 {
     if(hPlayback < 0)
-    {
         return;
-    }
     else if(!NET_DVR_StopPlayBack(hPlayback))
     {
         printf("failed to stop file [%d]\n",NET_DVR_GetLastError());
         NET_DVR_Logout(lUserID);
         NET_DVR_Cleanup();
         return ;
+    }
+}
+
+bool Client_SDK::Vedio_capture(std::string s)
+{
+    char *p = new char[s.length() + 1];
+    s.copy(p, std::string::npos);
+    p[s.length()] = 0;
+    NET_DVR_PlayBackCaptureFile(hPlayback, p);
+    delete [] p;
+}
+
+// 云台接口
+bool Client_SDK::Ptz_move(int mode, int speed, int begorend)
+{
+    LONG tmpuid=v_lUserID[1],tmpc=1;
+    switch(mode)
+    {
+    case Ptz_up:
+        return NET_DVR_PTZControlWithSpeed_Other(tmpuid,tmpc,TILT_UP,begorend,speed);
+        break;
+    case Ptz_down:
+        return NET_DVR_PTZControlWithSpeed_Other(tmpuid,tmpc,TILT_DOWN,begorend,speed);
+        break;
+    case Ptz_left:
+        return NET_DVR_PTZControlWithSpeed_Other(tmpuid,tmpc,PAN_LEFT,begorend,speed);
+        break;
+    case Ptz_right:
+        return NET_DVR_PTZControlWithSpeed_Other(tmpuid,tmpc,PAN_RIGHT,begorend,speed);
+        break;
+    case Ptz_fup:
+        return NET_DVR_PTZControlWithSpeed_Other(tmpuid,tmpc,FOCUS_NEAR,begorend,speed);
+        break;
+    case Ptz_fdown:
+        return NET_DVR_PTZControlWithSpeed_Other(tmpuid,tmpc,FOCUS_FAR,begorend,speed);
+        break;
+    default:
+        break;
+    }
+}
+
+bool Client_SDK::Ptz_preset(int mode, int pnum)
+{
+    LONG tmpuid=v_lUserID[1],tmpc=1;
+    switch(mode)
+    {
+    case Ptz_padd:
+        return NET_DVR_PTZPreset_Other(tmpuid,tmpc,SET_PRESET,pnum);
+        break;
+    case Ptz_pdel:
+        return NET_DVR_PTZPreset_Other(tmpuid,tmpc,CLE_PRESET,pnum);
+        break;
+    case Ptz_pgoto:
+        return NET_DVR_PTZPreset_Other(tmpuid,tmpc,GOTO_PRESET,pnum);
+        break;
+    default:
+        break;
     }
 }
 

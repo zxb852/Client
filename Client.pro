@@ -30,6 +30,7 @@ INCLUDEPATH += ./scene3 \
                ./scene1 \
                ./scene2 \
                ./scene4 \
+               ./lib \
                ./sdk64  \
                ./sdk64/HCNetSDKCom  \
                ./sdk64/include  \
@@ -64,6 +65,7 @@ LIBS += -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 SOURCES += \
         client_sdk.cpp \
     data.cpp \
+    dialog_alarm.cpp \
         dialog_login.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -89,11 +91,16 @@ SOURCES += \
         ../../SRC_C/Socket_connect_v2/socket_connect_v2/systems/log.cpp   \
         ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/frame.cpp   \
         ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/type_base.cpp   \
-        ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/types.cpp
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/types/types.cpp \
+        lib/tinystr.cpp \
+        lib/tinyxml.cpp \
+        lib/tinyxmlerror.cpp \
+        lib/tinyxmlparser.cpp
 
 HEADERS += \
         client_sdk.h \
         data.h \
+        dialog_alarm.h \
         dialog_login.h \
         mainwindow.h \
         scene1/s1_jk.h \
@@ -114,9 +121,12 @@ HEADERS += \
         scene4/scene4.h \
         sdk64/include/HCNetSDK.h \
         sdk64/include/LinuxPlayM4.h \
-        ../../SRC_C/Socket_connect_v2/socket_connect_v2/socket_connect_v2.h
+        ../../SRC_C/Socket_connect_v2/socket_connect_v2/socket_connect_v2.h \
+        lib/tinystr.h \
+        lib/tinyxml.h
 
 FORMS += \
+        dialog_alarm.ui \
         dialog_login.ui \
         mainwindow.ui \
         scene1/s1_jk.ui \

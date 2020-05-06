@@ -7,57 +7,78 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    sdk.SDK_Init();
-    sdk.SDK_Connect("192.168.1.2",8000,"admin","asdf1234");
+    // 初始化sdk模块，并连接设备
+    //sdk.SDK_Init();
+    //sdk.SDK_Connect("192.168.1.2",8000,"admin","asdf1234");
 
+    // 创建4个子窗口
     ps1=new Scene1();
     ps2=new scene2();
     ps3=new scene3();
     ps4=new scene4();
+
+    // 设置信号-槽相应函数
+    connect(ps1->ps1_yt, SIGNAL(ptz_move(int,int)), this, SLOT(ptz_move(int,int)));
+    connect(ps1->ps1_yt, SIGNAL(ptz_prset(int,int)), this, SLOT(ptz_prset(int,int)));
+    connect(ps1->ps1_jk, SIGNAL(playvedio(int)), this, SLOT( playvedio(int)));  //用一个定时信号来更改时间
+
+    connect(ps2, SIGNAL(callforplot(QDate)), this, SLOT(callforplot(QDate)));
+    connect(this, SIGNAL(returnforplot(string)), ps2, SLOT(returnforplot(string)));
+
+    connect(ps3->ps3_heat, SIGNAL(cmd1()), this, SLOT(cmd1()));
+
     connect(ps4, SIGNAL(Download_Vedio(record_time,record_time,int)), this, SLOT(Download_Vedio(record_time,record_time,int)));  //用一个定时信号来更改时间
     connect(ps4, SIGNAL(Capture()), this, SLOT(Capture()));  //用一个定时信号来更改时间
     connect(ps4, SIGNAL(Play_Vedio(record_time,record_time,int)), this, SLOT(Play_Vedio(record_time,record_time,int)));  //用一个定时信号来更改时间
     connect(ps4, SIGNAL(Stop_vedio()), this, SLOT(Stop_vedio()));  //用一个定时信号来更改时间
-    connect(ps1->ps1_jk, SIGNAL(playvedio(int)), this, SLOT( playvedio(int)));  //用一个定时信号来更改时间
 
 
+
+
+    //将子窗口添加进QStackedWidget
     qs_main=new QStackedWidget();
     qs_main->addWidget(ps1);
     qs_main->addWidget(ps2);
     qs_main->addWidget(ps3);
     qs_main->addWidget(ps4);
 
+    // 将QStackedWidget添加进QScrollArea
     ui->scrollArea->setWidget(qs_main);
 
+    // 设置按钮字体
     ui->pushButton ->setStyleSheet("QPushButton{background:rgb(136, 138, 133);}" "QPushButton:hover{background-color:rgb(136, 138, 133);}");
     ui->pushButton_2->setStyleSheet("QPushButton{background:rgb(255, 255, 255);}" "QPushButton:hover{background-color:rgb(136, 138, 133);}");
     ui->pushButton_3->setStyleSheet("QPushButton{background:rgb(255, 255, 255);}" "QPushButton:hover{background-color:rgb(136, 138, 133);}");
     ui->pushButton_4->setStyleSheet("QPushButton{background:rgb(255, 255, 255);}" "QPushButton:hover{background-color:rgb(136, 138, 133);}");
+    // 设置当前焦点子窗口
     qs_main->setCurrentWidget(ps1);
 
-    time = ui->lcdNumber;
-    time->setDigitCount(20);     //设置lcd里面的个数，格式是hh：mm：ss，总的是八个。所以设置为8
-    time->setPalette(Qt::color0); //设置颜色
+    // 设置LCD
+    ldctime = ui->lcdNumber;
+    ldctime->setDigitCount(20);     //设置lcd里面的个数，格式是hh：mm：ss，总的是八个。所以设置为8
+    ldctime->setPalette(Qt::color0); //设置颜色
 
+    // 设置定时器与定时函数
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(Update()));  //用一个定时信号来更改时间
     timer->start(100);  //启动定时
 
-    NET_DVR_PREVIEWINFO struPlayInfo;
-    //RGB
-    struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
-    struPlayInfo.lChannel = 33; //预览通道号
-    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+//    // 设置预览
+//    NET_DVR_PREVIEWINFO struPlayInfo;
+//        //RGB
+//    struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
+//    struPlayInfo.lChannel = 33; //预览通道号
+//    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
-    //IR
-    struPlayInfo.hPlayWnd=ps1->getplaywnd(2);
-    struPlayInfo.lChannel = 34; //预览通道号
-    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+//        //IR
+//    struPlayInfo.hPlayWnd=ps1->getplaywnd(2);
+//    struPlayInfo.lChannel = 34; //预览通道号
+//    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
-    //UV
-    struPlayInfo.hPlayWnd=ps1->getplaywnd(3);
-    struPlayInfo.lChannel = 35; //预览通道号
-    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+//        //UV
+//    struPlayInfo.hPlayWnd=ps1->getplaywnd(3);
+//    struPlayInfo.lChannel = 35; //预览通道号
+//    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
 
 }
@@ -82,15 +103,19 @@ void MainWindow::Download_Vedio(record_time begin,record_time end,int port)
     if(begin < end && end < now)
         sdk.Vedio_record(sdk.v_lUserID[0],begin,end,true,ps4->getplaywid(),port,ps4);
 }
+
+int Capturenum = 0;
 void MainWindow::Capture()
 {
+    string nume = "/home/zxb/SRC_C/data/capture/" + to_string(++Capturenum)+".jpg";
+    sdk.Vedio_capture(nume);
 }
 void MainWindow::Play_Vedio(record_time begin,record_time end,int port)
 {
     record_time now;
     now.settimenow();
     if(begin < end && end < now)
-        sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,NULL,port,ps4);
+        sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,ps4->getplaywid(),port,ps4);
 }
 void MainWindow::Stop_vedio()
 {
@@ -136,7 +161,7 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::showTime()
 {
     QString timestr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"); //设置时间格式
-    time->display(timestr);  //显示时间
+    ldctime->display(timestr);  //显示时间
 }
 
 void MainWindow::playvedio(int mode)
@@ -197,11 +222,11 @@ void MainWindow::Update()
 {
     showTime();
 
+    // 当接收到故障警报
     if(ptr_client!=nullptr)
     {
         State_mes mes;
         unsigned short src,cot;
-        //if(ptr_client->recv_buff_pop(mes,tid))
         if(ptr_client->recvbuff_pop(mes,src,cot))
         {
             string filename=mes.tostring();
@@ -220,9 +245,55 @@ void MainWindow::Update()
 
             qDebug()<<(int)mes.mode;
             ps1->ps1_jk->addtv(mes.year,mes.mon,mes.day,mes.hour,mes.min,mes.sec,"1号阀厅",ftypes(mes.mode));
+
+            // 弹出警报框
+            time_t sec = time(NULL);
+            tm *st = localtime(&sec);
+            bool istoday = mes.year == st->tm_year + 1900 && mes.mon == st->tm_mon + 1 && mes.day == st->tm_mday;
+            if(istoday)
+            {
+                Dialog_alarm da;
+                da.settype(mes.mode);
+                da.show();
+            }
+        }
+        // 当接收到历史曲线
+        string plotname;
+        if(ptr_client->recvbuff_pop_plotdata(plotname))
+        {
+            emit returnforplot(plotname);
         }
     }
 
+}
+
+void MainWindow::ptz_move(int mode,int speed)
+{
+    sdk.Ptz_move(mode,speed,1);
+    usleep(200000);
+    sdk.Ptz_move(mode,speed,0);
+}
+
+void MainWindow::ptz_prset(int mode,int pnum)
+{
+    sdk.Ptz_preset(mode,pnum);
+}
+
+void MainWindow::cmd1()
+{
+    Command cmd;
+    cmd.type = 1;
+    ptr_client->sendbuff_push(cmd,1);
+}
+
+void MainWindow::callforplot(QDate t)
+{
+    QString filename = QString::number(t.year())+"-"+QString::number(t.month())+"-"+QString::number(t.day());
+    QString basedir = "/home/zxb/SRC_C/data/Client_plotdata/";
+    QString qf = basedir+filename;
+
+    ptr_client->Setplotdataname(qf.toStdString());
+    ptr_client->callforplot(t.year(),t.month(),t.day());    // 请求数据
 }
 
 Mat QImage2cvMat(QImage image)

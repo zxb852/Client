@@ -19,6 +19,7 @@ void s3_heat_add::on_pushButton_clicked()
     int mode=ui->comboBox->currentIndex();
     double min=ui->lineEdit->text().toDouble();
     double max=ui->lineEdit_2->text().toDouble();
+    max = max == 0 ? 9999 : max;
     if(level==1)
         emit rule_common(add_rule(mode,min,max));
     else if(level==2)

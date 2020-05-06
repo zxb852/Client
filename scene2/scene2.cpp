@@ -24,14 +24,6 @@ scene2::~scene2()
 
 void scene2::setchart(QString txtname)
 {
-    char pPath[256] = {0};
-    getcwd(pPath, 256);
-    QString basedir(pPath);
-
-    QFile qf(basedir+"/plotdata/"+txtname);
-    qf.open(QIODevice::ReadOnly | QIODevice::Text);
-    QString strpoint;
-
     QChartView *chartView = new QChartView(this);
     QChart *chart = new QChart();
     chart->setTitle("设备温度曲线");   //图标的名字
@@ -43,21 +35,30 @@ void scene2::setchart(QString txtname)
     series0->setName("温度曲线");   //自动添加折线名字
     chart->addSeries(series0);
 
-    //序列添加数值
-    qreal x,y;
-    while(!qf.atEnd())
+    if(!txtname.isEmpty())
     {
-        strpoint=qf.readLine();
-        QStringList xy=strpoint.split(",");
-        if(xy.size()==2)
+        printf("no empty1\n");
+        fflush(NULL);
+
+        QFile qf(txtname);
+        qf.open(QIODevice::ReadOnly | QIODevice::Text);
+        QString strpoint;
+
+        //序列添加数值
+        qreal x,y;
+        while(!qf.atEnd())
         {
-            x=xy[0].toDouble();
-            y=xy[1].toDouble();
-            series0->append(x,y);
+            strpoint=qf.readLine();
+            QStringList xy=strpoint.split(",");
+            if(xy.size()==2)
+            {
+                x=xy[0].toDouble();
+                y=xy[1].toDouble();
+                series0->append(x,y);
+            }
+
         }
-
     }
-
     //创建坐标
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(0, 24);//设置坐标轴范围
@@ -78,14 +79,17 @@ void scene2::setchart(QString txtname)
     //为序列设置坐标轴
     chart->setAxisX(axisX, series0);
     chart->setAxisY(axisY, series0);
-
-
-
 }
 
 void scene2::on_calendarWidget_selectionChanged()
 {
     QDate nowaday = ui->calendarWidget->selectedDate();
-    QString filename = QString::number(nowaday.year())+"-"+QString::number(nowaday.month())+"-"+QString::number(nowaday.day());
-    setchart(filename);
+
+    emit callforplot(nowaday);
+    setchart("");
+}
+
+void scene2::returnforplot(string name)
+{
+    setchart(QString::fromStdString(name));
 }

@@ -117,7 +117,7 @@ void scene4::get_uidata()
 void scene4::on_pushButton_clicked()
 {
     get_uidata();
-    emit Download_Vedio(begin,end,1);
+    emit Download_Vedio(begin,end,33);
 }
 
 void scene4::on_pushButton_2_clicked()
@@ -129,7 +129,7 @@ void scene4::on_pushButton_2_clicked()
 void scene4::on_pushButton_3_clicked()
 {
     get_uidata();
-    emit Play_Vedio(begin,end,1);
+    emit Play_Vedio(begin,end,33);
 }
 
 void scene4::on_pushButton_4_clicked()

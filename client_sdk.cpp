@@ -46,7 +46,7 @@ bool Client_SDK::SDK_Connect(char *ip,WORD port,char *username,char *password)
     v_lUserID.push_back(lUserID);
 
 //  登录rgb设备，控制云台
-//    lUserID = NET_DVR_Login_V30("rgb add", "port", "username", "password", &struDeviceInfo);
+    lUserID = NET_DVR_Login_V30("192.168.1.64", 8000, "admin", "asdf1234", &struDeviceInfo);
     if (lUserID < 0){
         printf("Login error, %d\n", NET_DVR_GetLastError());
         NET_DVR_Cleanup();
@@ -74,7 +74,8 @@ bool Client_SDK::Vedio_Stream_Set(LONG lUserID,NET_DVR_PREVIEWINFO struPlayInfo,
 
     if (lRealPlayHandle < 0)
     {
-        printf("NET_DVR_RealPlay_V40 error\n");
+        printf("NET_DVR_RealPlay_V40 error error id : %d \n", (int)NET_DVR_GetLastError());
+
         NET_DVR_Logout(lUserID);
         NET_DVR_Cleanup();
         return false;

@@ -34,7 +34,6 @@ private slots:
 
     void on_B_point_3_clicked();
 
-
 signals:
     void ptz_move(int mode,int speed);
     void ptz_prset(int mode,int pnum);

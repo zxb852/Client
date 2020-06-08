@@ -93,12 +93,3 @@ void s1_yt::on_B_point_3_clicked()
 
 
 
-
-
-
-
-
-
-
-
-

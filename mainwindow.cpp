@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // 初始化sdk模块，并连接设备
-    //sdk.SDK_Init();
-    //sdk.SDK_Connect("192.168.1.2",8000,"admin","asdf1234");
+    sdk.SDK_Init();
+    sdk.SDK_Connect("192.168.1.2",8000,"admin","asdf1234");
 
     // 创建4个子窗口
     ps1=new Scene1();
@@ -63,22 +63,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(Update()));  //用一个定时信号来更改时间
     timer->start(100);  //启动定时
 
-//    // 设置预览
-//    NET_DVR_PREVIEWINFO struPlayInfo;
-//        //RGB
-//    struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
-//    struPlayInfo.lChannel = 33; //预览通道号
-//    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+    // 设置预览
+    NET_DVR_PREVIEWINFO struPlayInfo;
+        //RGB
+    struPlayInfo.hPlayWnd=ps1->getplaywnd(1);
+    struPlayInfo.lChannel = 33; //预览通道号
+    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
-//        //IR
-//    struPlayInfo.hPlayWnd=ps1->getplaywnd(2);
-//    struPlayInfo.lChannel = 34; //预览通道号
-//    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+        //IR
+    struPlayInfo.hPlayWnd=ps1->getplaywnd(2);
+    struPlayInfo.lChannel = 34; //预览通道号
+    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
-//        //UV
-//    struPlayInfo.hPlayWnd=ps1->getplaywnd(3);
-//    struPlayInfo.lChannel = 35; //预览通道号
-//    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
+        //UV
+    struPlayInfo.hPlayWnd=ps1->getplaywnd(3);
+    struPlayInfo.lChannel = 35; //预览通道号
+    sdk.Vedio_Stream_Set(sdk.v_lUserID.front(),struPlayInfo);
 
 
 }
@@ -101,7 +101,12 @@ void MainWindow::Download_Vedio(record_time begin,record_time end,int port)
     record_time now;
     now.settimenow();
     if(begin < end && end < now)
+    {
+        qDebug()<<"download video";
+        qDebug()<<(int)begin.year << " "<<(int)begin.month << " "<<(int)begin.day << " "<<(int)begin.hour << " "<<(int)begin.min << " "<<(int)begin.sec;
+        qDebug()<<(int)end.year << " "<<(int)end.month << " "<<(int)end.day << " "<<(int)end.hour << " "<<(int)end.min << " "<<(int)end.sec;
         sdk.Vedio_record(sdk.v_lUserID[0],begin,end,true,ps4->getplaywid(),port,ps4);
+    }
 }
 
 int Capturenum = 0;
@@ -115,7 +120,13 @@ void MainWindow::Play_Vedio(record_time begin,record_time end,int port)
     record_time now;
     now.settimenow();
     if(begin < end && end < now)
-        sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,ps4->getplaywid(),port,ps4);
+    {
+        qDebug()<<"play video";
+        qDebug()<<(int)begin.year << " "<<(int)begin.month << " "<<(int)begin.day << " "<<(int)begin.hour << " "<<(int)begin.min << " "<<(int)begin.sec;
+        qDebug()<<(int)end.year << " "<<(int)end.month << " "<<(int)end.day << " "<<(int)end.hour << " "<<(int)end.min << " "<<(int)end.sec;
+        if(!sdk.Vedio_record(sdk.v_lUserID[0],begin,end,false,ps4->getplaywid(),port,ps4))
+            printf("record play failed!");
+    }
 }
 void MainWindow::Stop_vedio()
 {
@@ -221,10 +232,9 @@ void MainWindow::playvedio(int mode)
 void MainWindow::Update()
 {
     showTime();
-
-    // 当接收到故障警报
     if(ptr_client!=nullptr)
     {
+        // 当接收到故障警报
         State_mes mes;
         unsigned short src,cot;
         if(ptr_client->recvbuff_pop(mes,src,cot))
@@ -243,19 +253,20 @@ void MainWindow::Update()
 
             v_alarm.push_back(pair<State_mes,vector<string>>(mes,names));
 
-            qDebug()<<(int)mes.mode;
+            qDebug()<< "recv alarm mode :"<<(int)mes.mode;
             ps1->ps1_jk->addtv(mes.year,mes.mon,mes.day,mes.hour,mes.min,mes.sec,"1号阀厅",ftypes(mes.mode));
 
             // 弹出警报框
-            time_t sec = time(NULL);
-            tm *st = localtime(&sec);
-            bool istoday = mes.year == st->tm_year + 1900 && mes.mon == st->tm_mon + 1 && mes.day == st->tm_mday;
-            if(istoday)
+            record_time recvt(mes.year, mes.mon, mes.day, mes.hour, mes.min,mes.sec + 30);
+            record_time nowt;
+            nowt.settimenow();
+            if(nowt < recvt)
             {
-                Dialog_alarm da;
-                da.settype(mes.mode);
-                da.show();
+                Dialog_alarm *da = new Dialog_alarm;
+                da->settype(mes.mode);
+                da->show();
             }
+
         }
         // 当接收到历史曲线
         string plotname;
@@ -269,9 +280,9 @@ void MainWindow::Update()
 
 void MainWindow::ptz_move(int mode,int speed)
 {
-    sdk.Ptz_move(mode,speed,1);
-    usleep(200000);
     sdk.Ptz_move(mode,speed,0);
+    usleep(500000);
+    sdk.Ptz_move(mode,speed,1);
 }
 
 void MainWindow::ptz_prset(int mode,int pnum)

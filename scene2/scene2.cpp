@@ -34,7 +34,7 @@ void scene2::setchart(QString txtname)
     QLineSeries *series0 = new QLineSeries();
     series0->setName("温度曲线");   //自动添加折线名字
     chart->addSeries(series0);
-
+    double maxy = -1000, miny = 1000;
     if(!txtname.isEmpty())
     {
         printf("no empty1\n");
@@ -54,6 +54,8 @@ void scene2::setchart(QString txtname)
             {
                 x=xy[0].toDouble();
                 y=xy[1].toDouble();
+                miny = std::min(xy[1].toDouble(), miny);
+                maxy = std::max(xy[1].toDouble(), maxy);
                 series0->append(x,y);
             }
 
@@ -69,7 +71,7 @@ void scene2::setchart(QString txtname)
     //    axisX->setGridLineVisible(false);
 
     QValueAxis *axisY = new QValueAxis; //Y 轴
-    axisY->setRange(0, 20);
+    axisY->setRange(miny > 0 ? 0 : miny, maxy < 60 ? 60 : maxy);
     axisY->setTitleText("value");
     axisY->setLabelFormat("%.2f"); //标签格式
     axisY->setTickCount(10);

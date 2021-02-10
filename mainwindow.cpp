@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // 设置信号-槽相应函数
     connect(ps1->ps1_yt, SIGNAL(ptz_move(int,int)), this, SLOT(ptz_move(int,int)));
     connect(ps1->ps1_yt, SIGNAL(ptz_prset(int,int)), this, SLOT(ptz_prset(int,int)));
-    connect(ps1->ps1_jk, SIGNAL(playvedio(int)), this, SLOT( playvedio(int)));  //用一个定时信号来更改时间
+    connect(ps1->ps1_jk, SIGNAL(playvedio(int)), this, SLOT(playvedio(int)));  //用一个定时信号来更改时间
+    connect(ps1->ps1_jk, SIGNAL(dection_switch(int)), this, SLOT(dection_switch(int)));
 
     connect(ps2, SIGNAL(callforplot(QDate)), this, SLOT(callforplot(QDate)));
     connect(this, SIGNAL(returnforplot(string)), ps2, SLOT(returnforplot(string)));
@@ -93,7 +94,11 @@ void MainWindow::setsocket(std::shared_ptr<Client> ptr)
     ptr_client=ptr;
     base=ptr_client->getbasefile();
     //timer->start(1000/60);
+    Command cmd;
+    cmd.type = 15;  //  all on
+    ptr_client -> sendbuff_push(cmd,1);
     ptr_client->updata_alarm_data();
+
 }
 
 void MainWindow::Download_Vedio(record_time begin,record_time end,int port)
@@ -227,6 +232,31 @@ void MainWindow::playvedio(int mode)
         }
         vcapture.release();
     }
+}
+
+void MainWindow::dection_switch(int mode)
+{
+    Command cmd;
+
+    if(mode == 7)
+        cmd.type=21;
+    else if(mode == 8)
+        cmd.type=22;
+
+    if(mode == 5)
+        cmd.type = 15;  //  all on
+    else if(mode == 6)
+        cmd.type = 10;  //  all off
+    else if(mode == 1)
+        cmd.type = 11;  //  heat on
+    else if(mode == 2)
+        cmd.type = 13;  //  fire on
+    else if(mode == 3)
+        cmd.type = 14;  //  water on
+    else if(mode == 4)
+        cmd.type = 12;  //  flash on
+
+    ptr_client -> sendbuff_push(cmd,1);
 }
 
 void MainWindow::Update()

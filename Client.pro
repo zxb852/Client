@@ -64,8 +64,8 @@ LIBS += -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 
 SOURCES += \
         client_sdk.cpp \
-    data.cpp \
-    dialog_alarm.cpp \
+        data.cpp \
+        dialog_alarm.cpp \
         dialog_login.cpp \
         main.cpp \
         mainwindow.cpp \

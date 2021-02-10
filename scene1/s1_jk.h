@@ -36,8 +36,13 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_pushButton_4_clicked();
+
+    void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
 signals:
     void playvedio(int mode);
+    void dection_switch(int mode);
+
 private:
     Ui::s1_jk *ui;
     QTreeWidget* treeWidget;

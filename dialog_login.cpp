@@ -27,13 +27,12 @@ void Dialog_login::on_B_login_clicked()
 
     std::shared_ptr<Client> ptr_client=std::make_shared<Client>();
     if (!ptr_client->s_connect(str_ip.c_str(),int_port))
-    //if (!client.s_connect("39.108.229.151 ", 8010))
     {
         qDebug()<< "connect failed"<< endl;
         this->reject();
     }
-
     cout << "connect successfully!" << endl;
+
     Login_mes login_mes("client","123");
     ptr_client->sendbuff_push(login_mes);
     while (!ptr_client->recvbuff_pop(login_mes));

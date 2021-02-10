@@ -49,6 +49,7 @@ private slots:
     void on_pushButton_4_clicked();
 
     void playvedio(int mode);
+    void dection_switch(int mode);
 
     void Update();
 
